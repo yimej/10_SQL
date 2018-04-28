@@ -68,9 +68,9 @@ having count(last_name) > 1
 #4c. Oh, no! The actor HARPO WILLIAMS was accidentally entered in the actor table as GROUCHO WILLIAMS, the name of Harpo's second cousin's 
 #husband's yoga teacher. Write a query to fix the record.
 update actor
-set first_name = 'groucho'
-where (first_name = 'groucho') and
-	  (last_name = 'williams')
+set first_name = 'HARPO'
+where (first_name = 'GROUCHO') and
+	  (last_name = 'WILLIAMS')
 ;
 
 #4d. Perhaps we were too hasty in changing GROUCHO to HARPO. It turns out that GROUCHO was the correct name after all! In a single query, 
@@ -78,10 +78,10 @@ where (first_name = 'groucho') and
 #exactly what the actor will be with the grievous error. BE CAREFUL NOT TO CHANGE THE FIRST NAME OF EVERY ACTOR TO MUCHO GROUCHO, HOWEVER! 
 #(Hint: update the record using a unique identifier.)
 update actor
-set	first_name = CASE
+set	first_name = CASE 
 		when first_name = 'HARPO' then 'GROUCHO'
-        when first_name = 'GROUCHO' then 'MUCHO GROUCHO'
-	end
+        when first_name = 'GROUCHO' then 'MUCHO GROUCHO' 
+        end
 where first_name in ('HARPO', 'GROUCHO')
 ;
 
@@ -97,7 +97,7 @@ join address a on s.address_id = a.address_id
 ;
 
 #6b. Use JOIN to display the total amount rung up by each staff member in August of 2005. Use tables staff and payment. 
-select sum(amount) as total, first_name, last_name
+select sum(amount) total, first_name, last_name
 from payment p
 join staff s on s.staff_id = p.staff_id
 group by p.staff_id
@@ -176,7 +176,7 @@ where film_id in
 ;
 
 #7e. Display the most frequently rented movies in descending order.
-select f.title, i.film_id, count(r.inventory_id) num_rentals
+select i.film_id, f.title, count(r.inventory_id) num_rentals
 from rental r
 	join inventory i on i.inventory_id = r.inventory_id
 	join film f on i.film_id = f.film_id
